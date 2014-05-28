@@ -16,7 +16,7 @@
 	
 	var app = angular.module('search', []);
 	
-	app.controller('SearchForm', function($http) {
+	app.controller('SearchForm', function($rootScope, $http) {
 		
 		this.placeholder = opts.placeholderText;
 		this.findButtonText = opts.findButtonText;
@@ -41,14 +41,36 @@
 				return;
 			}
 			// @todo: validate searchQuery
-			$http.get(opts.searchHandler + '?q=' + JSON.stringify(q))
-				.success(function(data,status){
-					
-				}).error(function(data,status){
-					
-				});
+			$http({
+				method: 'GET',
+				url: opts.searchHandler,
+				params: { q: JSON.stringify(q) }
+			}).success(function(data, status) {
+				// on success, emit event with data addressed to results controller
+				if (status === 200) {
+					$rootScope.$broadcast("results", {data: data});
+				}
+			}).error(function(data, status) {
+				console.error("Ajax faced troubles: %s, %s", status, data);
+				return;
+			});
 		};
 	});
 	
-	app.controller('SearchResults', function() {});
+	app.controller('SearchResults', function($scope) {
+		
+		this.results = [];
+		$scope.ctrl = this;
+		
+		this.isEmpty = function() {
+			return (this.results.length > 0) ? false : true;
+		};
+		
+		$scope.$on("results", function(event, args){
+			// @todo style matches with <strong> tag
+			var r = args.data,
+				c = event.currentScope.ctrl;
+			c.results = [{ name: r.name }];
+		});
+	});
 })();

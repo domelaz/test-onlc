@@ -25,10 +25,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="row search-results" ng-controller="SearchResults as results">
+			<div class="row search-results" ng-controller="SearchResults as result">
 				<div class="col-md-8 col-md-offset-2">
-					<div class="panel panel-default">
-						
+					<div class="panel panel-default" ng-hide="{{result.isEmpty()}}">
+						<ul class="list-group">
+							<li class="list-group-item" ng-repeat="result in result.results">
+								<strong>{{result.name}}</strong>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>

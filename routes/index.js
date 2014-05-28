@@ -22,5 +22,5 @@ exports.search = function(req, res) {
 	// make async request to db
 	
 	// send it back
-	res.json(req.query.q);
+	res.json({name: parcel});
 };
