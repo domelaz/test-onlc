@@ -1,0 +1,17 @@
+doctype html
+head(ng-app="search")
+  title test-onlc search page prototype
+  meta(name="viewport" content="width=device-width, initial-scale=1.0")
+  link(rel='stylesheet', href='/css/bootstrap.min.css')
+  link(rel='stylesheet', href='/css/onlc.css')
+html
+  body
+    .container
+      .row.search-form
+        .col-md-8.col-md-offset-2
+          include search-form
+    .container
+      .row.search-results
+        .col-md-8.col-md-offset-2
+          include search-results
+    include javascripts
