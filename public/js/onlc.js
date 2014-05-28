@@ -18,18 +18,20 @@
 	app.controller('SearchForm', function() {
 		
 		this.placeholder = opts.placeholderText;
+		this.searchQuery = '';
 		
 		this.find = function() {
 			// send ajax to db if:
 			//  key 'pressed flag' is true;
 			//  search query n > lenght > m;
 			//  reset timeout
+			alert(this.searchQuery);
 		};
 		
 		this.keyup = function() {
 			// clear timeout before find method
 			// set 'key pressed' flag to true
-			alert('he');
+			//alert('he');
 		};
 	});
 	
