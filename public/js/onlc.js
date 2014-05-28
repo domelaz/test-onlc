@@ -63,14 +63,16 @@
 		$scope.ctrl = this;
 		
 		this.isEmpty = function() {
-			return (this.results.length > 0) ? false : true;
+			// @todo wtf?
+			return (this.results.length > 0) ? true : false;
 		};
 		
 		$scope.$on("results", function(event, args){
 			// @todo style matches with <strong> tag
-			var r = args.data,
+			// @todo try parse json
+			var r = angular.fromJson(args.data),
 				c = event.currentScope.ctrl;
-			c.results = [{ name: r.name }];
+			c.results = r;
 		});
 	});
 })();
