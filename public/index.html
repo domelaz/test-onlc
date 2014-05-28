@@ -13,11 +13,11 @@
 				<div class="col-md-8 col-md-offset-2">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<form name="search-form" ng-controller="SearchForm as form">
+							<form name="search-form" ng-controller="SearchForm as form" ng-submit="form.find()">
 								<div class="input-group">
 									<input ng-keypress="form.keyup()" ng-model="form.searchQuery" name="search-query" type="text" placeholder=" {{form.placeholder}} " class="form-control">
 									<span class="input-group-btn">
-										<button ng-click="form.find()" class="btn btn-default" type="button">Найти</button>
+										<button class="btn btn-default" type="submit"> {{form.findButtonText}} </button>
 									</span>
 								</div>
 							</form>

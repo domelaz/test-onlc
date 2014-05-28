@@ -10,7 +10,8 @@
 		// задержка перед отправкой запроса на сервер, в миллисекундах
 		sendDelay: 500,
 		// поясняющий текст в поле поиска
-		placeholderText: "Введите название товара, идентификатор товара или название компании"
+		placeholderText: "Введите название товара, идентификатор товара или название компании",
+		findButtonText: "Найти"
 	};
 	
 	var app = angular.module('search', []);
@@ -18,6 +19,8 @@
 	app.controller('SearchForm', function() {
 		
 		this.placeholder = opts.placeholderText;
+		this.findButtonText = opts.findButtonText;
+		
 		this.searchQuery = '';
 		
 		this.find = function() {
