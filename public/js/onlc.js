@@ -16,7 +16,7 @@
 	
 	var app = angular.module('search', []);
 	
-	app.controller('SearchForm', function() {
+	app.controller('SearchForm', function($http) {
 		
 		this.placeholder = opts.placeholderText;
 		this.findButtonText = opts.findButtonText;
@@ -34,7 +34,19 @@
 		this.keyup = function() {
 			// clear timeout before find method
 			// set 'key pressed' flag to true
-			//alert('he');
+			
+			var q = this.searchQuery;
+			
+			if ((q.length < opts.minQueryLength) || (q.length > opts.maxQueryLength)) {
+				return;
+			}
+			// @todo: validate searchQuery
+			$http.get(opts.searchHandler + '?q=' + JSON.stringify(q))
+				.success(function(data,status){
+					
+				}).error(function(data,status){
+					
+				});
 		};
 	});
 	
