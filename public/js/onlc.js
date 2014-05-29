@@ -28,7 +28,7 @@
 			//  key 'pressed flag' is true;
 			//  search query n > lenght > m;
 			//  reset timeout
-			alert(this.searchQuery);
+			//alert(this.searchQuery);
 		};
 		
 		this.keyup = function() {
