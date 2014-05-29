@@ -66,8 +66,7 @@
 		$scope.ctrl = this;
 		
 		this.isEmpty = function() {
-			// @todo wtf?
-			return (this.results.length > 0) ? true : false;
+			return (this.results.length > 0) ? false : true;
 		};
 		
 		$scope.$on("searchSucceed", function(event, args){
