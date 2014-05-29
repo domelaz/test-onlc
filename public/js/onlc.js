@@ -11,7 +11,7 @@
 		sendDelay: 500,
 		// поясняющий текст в поле поиска
 		placeholderText: "Введите название товара, идентификатор товара или название компании",
-		findButtonText: "Найти"
+		findButtonText: "Найти",
 		shitHappensText: "Приносим свои извинения - поиск временно не работает"
 	};
 	
@@ -33,6 +33,7 @@
 		};
 		
 		this.keyup = function() {
+			// @todo try third party ng-Autocomplete modules
 			// clear timeout before find method
 			// set 'key pressed' flag to true
 			
