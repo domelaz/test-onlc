@@ -25,6 +25,14 @@
 					</div>
 				</div>
 			</div>
+			<div class="row" ng-controller="SearchTroubles as trouble">
+				<div class="col-md-8 col-md-offset-2" ng-show="trouble.inTrouble">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						{{trouble.statusMessage}}
+					</div>
+				</div>
+			</div>
 			<div class="row search-results" ng-controller="SearchResults as result">
 				<div class="col-md-8 col-md-offset-2">
 					<div class="panel panel-default" ng-hide="{{result.isEmpty()}}">

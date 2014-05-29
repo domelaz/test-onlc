@@ -12,6 +12,7 @@
 		// поясняющий текст в поле поиска
 		placeholderText: "Введите название товара, идентификатор товара или название компании",
 		findButtonText: "Найти"
+		shitHappensText: "Приносим свои извинения - поиск временно не работает"
 	};
 	
 	var app = angular.module('search', []);
@@ -48,9 +49,10 @@
 			}).success(function(data, status) {
 				// on success, emit event with data addressed to results controller
 				if (status === 200) {
-					$rootScope.$broadcast("results", {data: data});
+					$rootScope.$broadcast("searchSucceed", {data: data});
 				}
 			}).error(function(data, status) {
+				$rootScope.$broadcast("searchError", {data: data});
 				console.error("Ajax faced troubles: %s, %s", status, data);
 				return;
 			});
@@ -67,12 +69,39 @@
 			return (this.results.length > 0) ? true : false;
 		};
 		
-		$scope.$on("results", function(event, args){
+		$scope.$on("searchSucceed", function(event, args){
 			// @todo style matches with <strong> tag
 			// @todo try parse json
 			var r = angular.fromJson(args.data),
 				c = event.currentScope.ctrl;
 			c.results = r;
+		});
+
+		$scope.$on("searchError", function(event, args){
+			// @todo hide searchresults panel
+		});
+	});
+
+	app.controller('SearchTroubles', function($scope) {
+
+		this.inTrouble = false;
+		this.statusMessage = '';
+		$scope.ctrl = this;
+
+		this.isTrouble = function() {
+			return this.inTrouble;
+		};
+
+		$scope.$on("searchError", function(event, args) {
+			var c = event.currentScope.ctrl;
+			c.inTrouble = true;
+			c.statusMessage = opts.shitHappensText;
+		});
+
+		$scope.$on("searchSucceed", function(event, args) {
+			var c = event.currentScope.ctrl;
+			c.inTrouble = false;
+			c.statusMessage = '';
 		});
 	});
 })();
