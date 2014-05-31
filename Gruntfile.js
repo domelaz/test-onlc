@@ -48,9 +48,27 @@ module.exports = function(grunt) {
 				src: ['Gruntfile.js']
 			}
 		},
+		watch: {
+			syntax: {
+				files: [
+					'<%= jshint.app.src %>',
+					'<%= jshint.node.src %>',
+					'<%= jshint.gruntfile.src %>'
+				],
+				tasks: ['hint']
+			},
+			concatenate: {
+				files: [
+					'<%= concat.css.src %>',
+					'<%= concat.js.src %>'
+				],
+				tasks: ['glue']
+			},
+		},
 	});
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.registerTask('glue', ['concat']);
 	grunt.registerTask('hint', ['jshint']);
 };
