@@ -30,7 +30,7 @@ exports.search = function(req, res) {
 	//
 
 	// @todo use pool
-	connection = mysql.createConnection({
+	var connection = mysql.createConnection({
 		host: 'localhost',
 		user: 'onlc',
 		password: 'xxxxxx',
@@ -46,12 +46,12 @@ exports.search = function(req, res) {
 	var sqlcmd = "SELECT * FROM dataview WHERE " + were;
 
 	// @todo pager	
-	var query = connection.query(sqlcmd, [parcel], function(err,result) {
-		if (err) {
+	connection.query(sqlcmd, [parcel], function(err,result) {
+        if (err) {
 			res.send(500);
 			connection.end();
 			return;
-		};
+		}
 		res.json(result);
 		connection.end();
 	});

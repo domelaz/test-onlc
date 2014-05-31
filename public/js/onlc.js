@@ -77,9 +77,12 @@
 			c.results = r;
 		});
 
+		/**
+		 * @todo hide searchresults panel
+		 *
 		$scope.$on("searchError", function(event, args){
-			// @todo hide searchresults panel
-		});
+			
+		});*/
 	});
 
 	app.controller('SearchTroubles', function($scope) {
@@ -92,13 +95,13 @@
 			return this.inTrouble;
 		};
 
-		$scope.$on("searchError", function(event, args) {
+		$scope.$on("searchError", function(event) {
 			var c = event.currentScope.ctrl;
 			c.inTrouble = true;
 			c.statusMessage = opts.shitHappensText;
 		});
 
-		$scope.$on("searchSucceed", function(event, args) {
+		$scope.$on("searchSucceed", function(event) {
 			var c = event.currentScope.ctrl;
 			c.inTrouble = false;
 			c.statusMessage = '';
