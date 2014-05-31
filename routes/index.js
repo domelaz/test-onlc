@@ -1,58 +1,39 @@
-// @todo inject dependency
-var mysql = require('mysql');
-
-// Return search page in html
+/**
+ * Return search page in html
+ * 
+ * Until file public/index.html exists, this method is never been called
+ */
 exports.index = function(req, res) {
 	res.render('page');
 };	
 
-// Return search results in json
+/**
+ * Return search results in json format
+ *
+ * Expects search phrase in GET 'q' parameter;
+ * Response to client with json encoded array;
+ * Throws 400 'Bad Request' and 500 'Internal Server Error' if shit happened;
+ */
 exports.search = function(req, res) {
 
-	// is search param present
+	// is search parameter present in GET?
 	if (typeof(req.query.q) === 'undefined') {
-		res.send(400); // return 'Bad request'
+		res.send(400);
 		return;
 	}
-	// check content/type === json
-	// parse json in try/catch
+	
+	// try convert GET request 'q' parameter to json
 	var parcel;
 	try {
 		parcel = JSON.parse(req.query.q);
 	} catch (e) {
-		res.send(400); // return 'Bad request'
+		res.send(400);
 		return;
 	}
-	
-	//
-	// @todo Гипотеза: искать не в базе, а в заранее созданом индексе.
-	// К примеру, запросы отправлять в sphinx, а из mysql тянуть результаты по мере необходимости.
-	//
 
-	// @todo use pool
-	var connection = mysql.createConnection({
-		host: 'localhost',
-		user: 'onlc',
-		password: 'xxxxxx',
-		database: 'onlcview'
-	});
-
-	var param = connection.escape('%' + parcel + '%');
-
-	// Build SQL query like this one:
-	// SELECT * FROM dataview WHERE name LIKE '%foo%' OR company LIKE '%foo%' OR id LIKE '%foo%';
-	var searchFields = ['name','company','id'];
-	var were = searchFields.join(" LIKE "+param+" OR ") + " LIKE "+param+";";
-	var sqlcmd = "SELECT * FROM dataview WHERE " + were;
-
-	// @todo pager	
-	connection.query(sqlcmd, [parcel], function(err,result) {
-        if (err) {
-			res.send(500);
-			connection.end();
-			return;
-		}
+	// fetch search results from underlying datasource and pipe them to client
+	req.model.fetch('searchResults', { parcel: parcel }, function(err, result) {
+		if (err) { res.send(500); return; }
 		res.json(result);
-		connection.end();
 	});
 };
