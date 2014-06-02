@@ -7,12 +7,12 @@
 		"test": "test"
 	},
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "NODE_ENV=production nodemon --watch bin/ --watch lib/ --watch routes/ --watch views/"
+		"test": "mocha --require chai --reporter spec test/node/**/*.js",
+		"start": "NODE_ENV=production nodemon lib/app.js --watch bin/ --watch lib/ --watch routes/ --watch views/"
 	},
 	"repository": {
 		"type": "git",
-		"url": "domelaz@uno:/home/domelaz/gits/test-oncl"
+		"url": "https://github.com/domelaz/test-onlc.git"
 	},
 	"author": "anton@domelaz.ru",
 	"license": "MIT",
@@ -24,9 +24,12 @@
 		"mysql": "^2.3.1"
 	},
 	"devDependencies": {
+		"chai": "^1.9.1",
 		"grunt-contrib-concat": "^0.4.0",
 		"grunt-contrib-jshint": "^0.10.0",
 		"grunt-contrib-watch": "^0.6.1",
-		"grunt-notify": "^0.3.0"
+		"grunt-notify": "^0.3.0",
+		"mocha": "^1.20.0",
+		"supertest": "^0.13.0"
 	}
 }

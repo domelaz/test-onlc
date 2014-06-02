@@ -32,7 +32,9 @@ module.exports = function(grunt) {
 				undef: true,
 				unused: true,
 				predef: [
-					'angular'
+					'angular',
+					'describe', //mocha
+					'it', //mocha
 				]
 			},
 			app: {
@@ -46,6 +48,9 @@ module.exports = function(grunt) {
 			},
 			gruntfile: {
 				src: ['Gruntfile.js']
+			},
+			tests: {
+				src: ['test/**/*.js']
 			}
 		},
 		watch: {
@@ -53,7 +58,8 @@ module.exports = function(grunt) {
 				files: [
 					'<%= jshint.app.src %>',
 					'<%= jshint.node.src %>',
-					'<%= jshint.gruntfile.src %>'
+					'<%= jshint.gruntfile.src %>',
+					'<%= jshint.tests.src %>'
 				],
 				tasks: ['hint']
 			},
