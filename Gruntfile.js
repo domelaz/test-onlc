@@ -35,6 +35,7 @@ module.exports = function(grunt) {
 					'angular',
 					'describe', //mocha
 					'it', //mocha
+					'beforeEach', //mocha
 				]
 			},
 			app: {
@@ -52,6 +53,18 @@ module.exports = function(grunt) {
 			tests: {
 				src: ['test/**/*.js']
 			}
+		},
+		shell: {
+			options: {
+				stdout: true
+			},
+			testDatabaseInit: {
+				command: 'mysql --user=root -p -e "' +
+					'DROP SCHEMA IF EXISTS onlcview_test; ' +
+			   		'CREATE SCHEMA onlcview_test; ' +
+					"GRANT ALL PRIVILEGES on onlcview_test.* to 'onlc'@'localhost' IDENTIFIED BY 'xxxxxx'" +
+					';"'
+			},
 		},
 		watch: {
 			syntax: {
@@ -76,6 +89,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-notify');
+	grunt.loadNpmTasks('grunt-shell');
 	grunt.registerTask('glue', ['concat']);
 	grunt.registerTask('hint', ['jshint']);
+	grunt.registerTask('testSetup', ['shell:testDatabaseInit']);
 };
