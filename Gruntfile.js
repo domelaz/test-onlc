@@ -54,6 +54,27 @@ module.exports = function(grunt) {
 				src: ['test/**/*.js']
 			}
 		},
+		mochaTest: {
+			node: {
+				options: {
+					reporter: 'spec',
+					require: 'chai'
+				},
+				src: [
+					'test/node/**/*.js'
+				],
+			},
+			coverage: {
+				options: {
+					reporter: 'html-cov',
+					quiet: true,
+					captureFile: 'code-cov/index.html'
+				},
+				src: [
+					'<%= mochaTest.node.src %>'
+				],
+			}
+		},
 		shell: {
 			options: {
 				stdout: true
@@ -64,6 +85,14 @@ module.exports = function(grunt) {
 			   		'CREATE SCHEMA onlcview_test; ' +
 					"GRANT ALL PRIVILEGES on onlcview_test.* to 'onlc'@'localhost' IDENTIFIED BY 'xxxxxx'" +
 					';"'
+			},
+			cleanupCoverage: {
+				command: 'rm code-cov/*'
+			},
+		},
+		env: {
+			coverage: {
+				CODE_COV: true,
 			},
 		},
 		watch: {
@@ -84,13 +113,25 @@ module.exports = function(grunt) {
 				tasks: ['glue']
 			},
 		},
+		blanket: {
+			instrument: {
+				options: {},
+				files: {
+					'code-cov/' : ['routes/', 'lib/'],
+				},
+			},
+		},
 	});
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-notify');
 	grunt.loadNpmTasks('grunt-shell');
+	grunt.loadNpmTasks('grunt-blanket');
+	grunt.loadNpmTasks('grunt-mocha-test');
+	grunt.loadNpmTasks('grunt-env');
 	grunt.registerTask('glue', ['concat']);
 	grunt.registerTask('hint', ['jshint']);
 	grunt.registerTask('testSetup', ['shell:testDatabaseInit']);
+	grunt.registerTask('coverage', ['shell:cleanupCoverage','blanket','env:coverage','mochaTest:coverage']);
 };

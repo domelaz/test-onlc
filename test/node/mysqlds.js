@@ -1,7 +1,7 @@
 var request = require('supertest'),
 	express = require('express'),
 	mysql = require('mysql'),
-	mysqlds = require('./../../lib/mysqlds.js');
+	mysqlds = process.env.CODE_COV ? require('./../../code-cov/mysqlds.js') : require('./../../lib/mysqlds.js');
 
 describe('Mysql Express Middleware', function() {
 
@@ -48,7 +48,7 @@ describe('Mysql Express Middleware', function() {
 		password: 'xxxxxx',
 		database: 'onlcview_test'
 	}));
-
+	
 	app.get('/search', function(req, res) {
 		req.model.fetch('searchResults', { parcel: req.query.q }, function(err, result) {
 			if (err) { res.send(500); }
