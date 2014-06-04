@@ -95,6 +95,10 @@ module.exports = function(grunt) {
 		env: {
 			coverage: {
 				CODE_COV: true,
+				PORT: 3001
+			},
+			nodeTest: {
+				PORT: 3001
 			},
 		},
 		watch: {
@@ -135,5 +139,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('glue', ['concat']);
 	grunt.registerTask('hint', ['jshint']);
 	grunt.registerTask('testSetup', ['shell:testDatabaseInit']);
-	grunt.registerTask('coverage', ['shell:cleanupCoverage','blanket','env:coverage','mochaTest:coverage']);
+	grunt.registerTask('nodeTest', ['env:nodeTest', 'mochaTest:node']);
+	grunt.registerTask('nodeCoverage', ['shell:cleanupCoverage','blanket','env:coverage','mochaTest:coverage']);
 };
