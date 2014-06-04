@@ -33,9 +33,11 @@ module.exports = function(grunt) {
 				unused: true,
 				predef: [
 					'angular',
+					'inject', //angular
 					'describe', //mocha
 					'it', //mocha
 					'beforeEach', //mocha
+					'expect', //chai
 				]
 			},
 			app: {
