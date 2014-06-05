@@ -81,6 +81,43 @@ module.exports = function(grunt) {
 				],
 			}
 		},
+		karma: {
+			options: {
+				files: [
+					'bower_components/angular/angular.js',
+					'bower_components/angular-route/angular-route.js',
+					'bower_components/angular-mocks/angular-mocks.js',
+					'public/js/app/**/*.js',
+					'test/unit/**/*.js'
+				],
+				frameworks: ['mocha', 'chai'],
+				client: {
+					mocha: {
+						ui: 'bdd'
+					}
+				},
+				plugins: [
+					'karma-mocha',
+					'karma-coverage',
+					'karma-chai',
+					'karma-firefox-launcher',
+				],
+				reporters: ['progress', 'coverage'],
+				coverageReporter: {
+					type: 'html',
+					dir: 'code-cov/client/unit'
+				},
+				preprocessors: {
+					'public/js/app/*.js': 'coverage'
+				},
+			},
+			single: {
+				autoWatch: false,
+				singleRun: true,
+				browsers: ['Firefox'],
+			}
+
+		},
 		shell: {
 			options: {
 				stdout: true
@@ -140,6 +177,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-blanket');
 	grunt.loadNpmTasks('grunt-mocha-test');
+	grunt.loadNpmTasks('grunt-karma');
 	grunt.loadNpmTasks('grunt-env');
 	grunt.registerTask('glue', ['concat']);
 	grunt.registerTask('hint', ['jshint']);
