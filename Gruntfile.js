@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 					'public/js/angular.js',
 					'public/js/jquery.js',
 					'public/js/bootstrap.min.js',
-					'public/js/onlc.js'
+					'public/js/app/onlc.js'
 				],
 				dest: 'public/js/scripts.js'
 			}
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
 				]
 			},
 			app: {
-				src: ['public/js/onlc.js']
+				src: ['public/js/app/onlc.js']
 			},
 			node: {
 				src: [

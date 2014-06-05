@@ -6,7 +6,7 @@ module.exports = function(config) {
 			'bower_components/angular/angular.js',
 			'bower_components/angular-route/angular-route.js',
 			'bower_components/angular-mocks/angular-mocks.js',
-			'public/js/onlc.js',
+			'public/js/app/**/*.js',
 			'test/unit/**/*.js'
 		],
 		autoWatch: true,
@@ -14,6 +14,7 @@ module.exports = function(config) {
 		frameworks: ['mocha', 'chai'],
 		plugins: [
 			'karma-mocha',
+			'karma-coverage',
 			'karma-chai',
 			'karma-firefox-launcher',
 		],
@@ -21,6 +22,14 @@ module.exports = function(config) {
 			mocha: {
 				ui: 'bdd'
 			}
-		}
+		},
+		reporters: ['progress', 'coverage'],
+		coverageReporter: {
+			type: 'html',
+			dir: 'code-cov/client/unit'
+		},
+		preprocessors: {
+			'public/js/app/*.js': 'coverage'
+		},
 	});
 };
