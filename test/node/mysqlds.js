@@ -1,7 +1,7 @@
 var request = require('supertest'),
 	express = require('express'),
 	mysql = require('mysql'),
-	mysqlds = process.env.CODE_COV ? require('./../../code-cov/mysqlds.js') : require('./../../lib/mysqlds.js');
+	mysqlds = process.env.CODE_COV ? require(process.env.COV_PATH + 'mysqlds.js') : require('./../../lib/mysqlds.js');
 
 describe('Mysql Express Middleware', function() {
 

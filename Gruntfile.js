@@ -1,6 +1,10 @@
 module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		paths: {
+			coverageDir: 'code-cov/',
+			coverageNode: 'code-cov/server/',
+		},
 		concat: {
 			// Файлы указываются явно, так как важна очередность
 			css: {
@@ -70,7 +74,7 @@ module.exports = function(grunt) {
 				options: {
 					reporter: 'html-cov',
 					quiet: true,
-					captureFile: 'code-cov/index.html'
+					captureFile: '<%= paths.coverageNode %>index.html',
 				},
 				src: [
 					'<%= mochaTest.node.src %>'
@@ -89,12 +93,13 @@ module.exports = function(grunt) {
 					';"'
 			},
 			cleanupCoverage: {
-				command: 'rm code-cov/*'
+				command: 'rm -f <%= paths.coverageNode %>*'
 			},
 		},
 		env: {
 			coverage: {
 				CODE_COV: true,
+				COV_PATH: './../../<%= paths.coverageNode %>',
 				PORT: 3001
 			},
 			nodeTest: {
@@ -123,7 +128,7 @@ module.exports = function(grunt) {
 			instrument: {
 				options: {},
 				files: {
-					'code-cov/' : ['routes/', 'lib/'],
+					'<%= paths.coverageNode %>' : ['routes/', 'lib/'],
 				},
 			},
 		},

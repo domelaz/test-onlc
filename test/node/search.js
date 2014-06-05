@@ -1,6 +1,6 @@
 var request = require('supertest'),
 	express = require('express'),
-	routes = process.env.CODE_COV ? require('./../../code-cov/index.js') : require('./../../routes/index.js');
+	routes = process.env.CODE_COV ? require(process.env.COV_PATH + 'index.js') : require('./../../routes/index.js');
 
 describe('Search Resluts', function() {
 	

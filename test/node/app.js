@@ -1,7 +1,7 @@
 var request = require('supertest'),
 	http = require('http'),
 	should = require('chai').should(),
-	ExpressWorker = process.env.CODE_COV ? require('./../../code-cov/app.js') : require('./../../lib/app.js');
+	ExpressWorker = process.env.CODE_COV ? require(process.env.COV_PATH + '/app.js') : require('./../../lib/app.js');
 
 /*jshint unused: false*/
 
