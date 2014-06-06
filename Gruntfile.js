@@ -180,10 +180,25 @@ module.exports = function(grunt) {
 				},
 			},
 		},
+		uglify: {
+			options: {
+				mangle: true,
+				preserveComments: 'some',
+			},
+			main: {
+				files: [{
+					expand: true,
+					cwd: 'public/js/',
+					src: '*.js',
+					dest: 'public/js/',
+				}],
+			},
+		},
 	});
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-notify');
 	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-blanket');

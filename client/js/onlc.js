@@ -63,7 +63,7 @@
 		};
 	}]);
 	
-	app.controller('SearchResults', function($scope) {
+	app.controller('SearchResults', ['$scope', function($scope) {
 		
 		this.results = [];
 		$scope.ctrl = this;
@@ -86,9 +86,9 @@
 		$scope.$on("searchError", function(event, args){
 			
 		});*/
-	});
+	}]);
 
-	app.controller('SearchTroubles', function($scope) {
+	app.controller('SearchTroubles', ['$scope', function($scope) {
 
 		this.inTrouble = false;
 		this.statusMessage = '';
@@ -109,5 +109,5 @@
 			c.inTrouble = false;
 			c.statusMessage = '';
 		});
-	});
+	}]);
 })();
