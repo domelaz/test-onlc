@@ -194,11 +194,20 @@ module.exports = function(grunt) {
 				}],
 			},
 		},
+		cssmin: {
+			minify: {
+				expand: true,
+				cwd: 'public/css/',
+				src: '*.css',
+				dest: 'public/css/',
+			}
+		}
 	});
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-notify');
 	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-blanket');
