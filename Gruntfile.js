@@ -9,17 +9,18 @@ module.exports = function(grunt) {
 			// Файлы указываются явно, так как важна очередность
 			css: {
 				src: [
-					'public/css/bootstrap.min.css',
-   					'public/css/onlc.css'
+					'bower_components/bootstrap/dist/css/bootstrap.css',
+					'client/css/onlc.css',
 				],
 				dest: 'public/css/styles.css'
 				},
 			js: {
 				src: [
-					'public/js/angular.js',
-					'public/js/jquery.js',
-					'public/js/bootstrap.min.js',
-					'public/js/app/onlc.js'
+					'bower_components/angular/angular.js',
+					'bower_components/jquery/dist/jquery.js', // for bootstrap
+					'bower_components/bootstrap/dist/js/bootstrap.js',
+					'client/js/onlc.js',
+					'client/js/services.js',
 				],
 				dest: 'public/js/scripts.js'
 			}
@@ -47,7 +48,7 @@ module.exports = function(grunt) {
 				]
 			},
 			app: {
-				src: ['public/js/app/onlc.js']
+				src: ['client/js/**/*.js']
 			},
 			node: {
 				src: [
@@ -89,7 +90,7 @@ module.exports = function(grunt) {
 					'bower_components/angular/angular.js',
 					'bower_components/angular-route/angular-route.js',
 					'bower_components/angular-mocks/angular-mocks.js',
-					'public/js/app/**/*.js',
+					'client/js/**/*.js',
 					'test/unit/**/*.js'
 				],
 				frameworks: ['mocha', 'chai'],
