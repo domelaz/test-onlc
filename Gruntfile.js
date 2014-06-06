@@ -38,10 +38,12 @@ module.exports = function(grunt) {
 				predef: [
 					'angular',
 					'inject', //angular
+					'browser',
+					'by',
+					'element',
 					'describe', //mocha
 					'it', //mocha
 					'beforeEach', //mocha
-					'expect', //chai
 				]
 			},
 			app: {
@@ -101,7 +103,13 @@ module.exports = function(grunt) {
 					'karma-coverage',
 					'karma-chai',
 					'karma-firefox-launcher',
+					'karma-chrome-launcher',
 				],
+			},
+			single: {
+				autoWatch: false,
+				singleRun: true,
+				browsers: ['Firefox'],
 				reporters: ['progress', 'coverage'],
 				coverageReporter: {
 					type: 'html',
@@ -111,12 +119,11 @@ module.exports = function(grunt) {
 					'public/js/app/*.js': 'coverage'
 				},
 			},
-			single: {
-				autoWatch: false,
-				singleRun: true,
-				browsers: ['Firefox'],
-			}
-
+			continious: {
+				autoWatch: true,
+				singleRun: false,
+				browsers: ['Chrome'],
+			},
 		},
 		shell: {
 			options: {
@@ -141,6 +148,9 @@ module.exports = function(grunt) {
 			},
 			nodeTest: {
 				PORT: 3001
+			},
+			chromium: {
+				CHROME_BIN: 'chromium-browser'
 			},
 		},
 		watch: {
@@ -184,4 +194,5 @@ module.exports = function(grunt) {
 	grunt.registerTask('testSetup', ['shell:testDatabaseInit']);
 	grunt.registerTask('nodeTest', ['env:nodeTest', 'mochaTest:node']);
 	grunt.registerTask('nodeCoverage', ['shell:cleanupCoverage','blanket','env:coverage','mochaTest:coverage']);
+	grunt.registerTask('longKarma', ['env:chromium', 'karma:continious']);
 };

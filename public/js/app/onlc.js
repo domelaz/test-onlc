@@ -17,13 +17,30 @@
 	
 	var app = angular.module('search', []);
 	
-	app.controller('SearchForm', function($rootScope, $http) {
+	app.controller('SearchForm', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
 		
 		this.placeholder = opts.placeholderText;
 		this.findButtonText = opts.findButtonText;
 		
 		this.searchQuery = '';
 		
+		this.getResults = function(q) {
+			// @todo: validate searchQuery
+			$http({
+				method: 'GET',
+				url: opts.searchHandler,
+				params: { q: JSON.stringify(q) }
+			}).success(function(data, status) {
+				// on success, emit event with data addressed to results controller
+				$scope.status = status;
+				$rootScope.$broadcast("searchSucceed", {data: data});
+			}).error(function(data, status) {
+				$scope.status = status;
+				$rootScope.$broadcast("searchError", {data: data});
+				console.error("Ajax faced troubles: %s, %s", status, data);
+			});
+		};
+
 		this.find = function() {
 			// send ajax to db if:
 			//  key 'pressed flag' is true;
@@ -42,23 +59,9 @@
 			if ((q.length < opts.minQueryLength) || (q.length > opts.maxQueryLength)) {
 				return;
 			}
-			// @todo: validate searchQuery
-			$http({
-				method: 'GET',
-				url: opts.searchHandler,
-				params: { q: JSON.stringify(q) }
-			}).success(function(data, status) {
-				// on success, emit event with data addressed to results controller
-				if (status === 200) {
-					$rootScope.$broadcast("searchSucceed", {data: data});
-				}
-			}).error(function(data, status) {
-				$rootScope.$broadcast("searchError", {data: data});
-				console.error("Ajax faced troubles: %s, %s", status, data);
-				return;
-			});
+			this.getResults(q);
 		};
-	});
+	}]);
 	
 	app.controller('SearchResults', function($scope) {
 		
