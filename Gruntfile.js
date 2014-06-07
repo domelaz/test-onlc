@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 			css: {
 				src: [
 					'bower_components/bootstrap/dist/css/bootstrap.css',
-					'client/css/onlc.css',
+					'client/css/app.css',
 				],
 				dest: 'public/css/styles.css'
 				},
@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 					'bower_components/angular/angular.js',
 					'bower_components/jquery/dist/jquery.js', // for bootstrap
 					'bower_components/bootstrap/dist/js/bootstrap.js',
-					'client/js/onlc.js',
+					'client/js/app.js',
 					'client/js/services.js',
 				],
 				dest: 'public/js/scripts.js'
