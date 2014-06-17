@@ -119,7 +119,7 @@ module.exports = function(grunt) {
 					dir: 'code-cov/client/unit'
 				},
 				preprocessors: {
-					'public/js/app/*.js': 'coverage'
+					'client/js/*.js': 'coverage'
 				},
 			},
 			continious: {

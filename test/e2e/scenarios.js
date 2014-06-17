@@ -8,7 +8,7 @@ describe('onlc search', function() {
 		browser.get('index.html');
 	});
 	it('should be some search results', function() {
-		var searchForm = element(by.model('form.searchQuery'));
+		var searchForm = element(by.name('search-query'));
 		searchForm.sendKeys('ярмарка');
 		var searhcResults = element.all(by.repeater('result in result.results'));
 		expect(searhcResults.count()).to.eventually.equal(1);

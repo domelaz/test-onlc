@@ -23,13 +23,9 @@
 		this.findButtonText = opts.findButtonText;
 		
 		$scope.searchQuery = '';
-		$scope.$watch('searchQuery', function(newVal, oldVal, $scope) {
+
+		$scope._find = function() {
 			var q = $scope.searchQuery;
-			if ((q.length < opts.minQueryLength) || 
-				(q.length > opts.maxQueryLength) ||
-				(newVal === oldVal)) {
-				return;
-			}
 			Data.query({q: JSON.stringify(q)},
 				// success callback, emit event with data addressed to results controller
 				function(data, status) {
@@ -43,6 +39,20 @@
 					console.error("Ajax faced troubles: %s, %s", status, data);
 				}
 			);
+		};
+
+		/**
+		 * Watch for changes in search field
+		 */
+		$scope.$watch('searchQuery', function(newVal, oldVal, $scope) {
+			var q = $scope.searchQuery;
+			if ((q.length < opts.minQueryLength) || 
+				(q.length > opts.maxQueryLength) ||
+				(newVal === oldVal)) {
+				return;
+			}
+			$scope.status = 'runQuery';
+			$scope._find();
 		});
 		
 		this.find = function() {
