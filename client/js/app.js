@@ -54,14 +54,6 @@
 			$scope.status = 'runQuery';
 			$scope._find();
 		});
-		
-		this.find = function() {
-			// send ajax to db if:
-			//  key 'pressed flag' is true;
-			//  search query n > lenght > m;
-			//  reset timeout
-			//alert(this.searchQuery);
-		};
 	}]);
 	
 	app.controller('SearchResults', ['$scope', function($scope) {
