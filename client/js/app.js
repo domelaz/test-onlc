@@ -15,51 +15,42 @@
 		shitHappensText: "Приносим свои извинения - поиск временно не работает"
 	};
 	
-	var app = angular.module('search', []);
+	var app = angular.module('search', ['searchService']);
 	
-	app.controller('SearchForm', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+	app.controller('SearchForm', ['$scope', '$rootScope', 'Data', function($scope, $rootScope, Data) {
 		
 		this.placeholder = opts.placeholderText;
 		this.findButtonText = opts.findButtonText;
 		
-		this.searchQuery = '';
+		$scope.searchQuery = '';
+		$scope.$watch('searchQuery', function(newVal, oldVal, $scope) {
+			var q = $scope.searchQuery;
+			if ((q.length < opts.minQueryLength) || 
+				(q.length > opts.maxQueryLength) ||
+				(newVal === oldVal)) {
+				return;
+			}
+			Data.query({q: JSON.stringify(q)},
+				// success callback, emit event with data addressed to results controller
+				function(data, status) {
+					$scope.status = status;
+					$rootScope.$broadcast("searchSucceed", {data: data});
+				},
+				// error callback
+				function(data, status) {
+					$scope.status = status;
+					$rootScope.$broadcast("searchError", {data: data});
+					console.error("Ajax faced troubles: %s, %s", status, data);
+				}
+			);
+		});
 		
-		this.getResults = function(q) {
-			// @todo: validate searchQuery
-			$http({
-				method: 'GET',
-				url: opts.searchHandler,
-				params: { q: JSON.stringify(q) }
-			}).success(function(data, status) {
-				// on success, emit event with data addressed to results controller
-				$scope.status = status;
-				$rootScope.$broadcast("searchSucceed", {data: data});
-			}).error(function(data, status) {
-				$scope.status = status;
-				$rootScope.$broadcast("searchError", {data: data});
-				console.error("Ajax faced troubles: %s, %s", status, data);
-			});
-		};
-
 		this.find = function() {
 			// send ajax to db if:
 			//  key 'pressed flag' is true;
 			//  search query n > lenght > m;
 			//  reset timeout
 			//alert(this.searchQuery);
-		};
-		
-		this.keyup = function() {
-			// @todo try third party ng-Autocomplete modules
-			// clear timeout before find method
-			// set 'key pressed' flag to true
-			
-			var q = this.searchQuery;
-			
-			if ((q.length < opts.minQueryLength) || (q.length > opts.maxQueryLength)) {
-				return;
-			}
-			this.getResults(q);
 		};
 	}]);
 	
