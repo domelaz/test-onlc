@@ -1,16 +1,17 @@
 /*jshint expr:true*/
-/*global expect*/
+/*global expect, sinon*/
 describe('Controllers', function() {
 
 	beforeEach(module('search'));
 	beforeEach(module('searchService'));
 
 	describe('SearchForm controller', function() {
-		var scope, ctrl, $httpBackend;
+		var scope, rootScope, ctrl, $httpBackend;
 		
 		beforeEach(inject(function(_$httpBackend_, $rootScope, $controller){
 			$httpBackend = _$httpBackend_;
 			scope = $rootScope.$new();
+			rootScope = $rootScope;
 			ctrl = $controller('SearchForm', { $scope: scope });
 		}));
 
@@ -30,18 +31,24 @@ describe('Controllers', function() {
 		});
 
 		it('should be find answer', function() {
-			$httpBackend.expectGET('search?q=%22answer%22').respond(200,[42]);
+			var spy = sinon.spy(rootScope, '$broadcast');
+			$httpBackend.expectGET('search?q=%22answer%22').respond(200, [42]);
 			scope.searchQuery = 'answer';
 			scope._find();
 			$httpBackend.flush();
+			expect(spy.callCount).to.be.equal(1);
+			expect(spy.calledWith('searchSucceed')).to.be.true;
 			expect(scope.status).to.be.a.function;
 		});
 
 		it('should be no answer', function() {
-			$httpBackend.expectGET('search?q=%22answer%22').respond(500);
+			var spy = sinon.spy(rootScope, '$broadcast');
+			$httpBackend.expectGET('search?q=%22answer%22').respond(500, ['error']);
 			scope.searchQuery = 'answer';
 			scope._find();
 			$httpBackend.flush();
+			expect(spy.callCount).to.be.equal(1);
+			expect(spy.calledWith('searchError')).to.be.true;
 			expect(scope.status).to.be.a.function;
 		});
 	});

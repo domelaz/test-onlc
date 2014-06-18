@@ -95,7 +95,7 @@ module.exports = function(grunt) {
 					'client/js/**/*.js',
 					'test/unit/**/*.js'
 				],
-				frameworks: ['mocha', 'chai'],
+				frameworks: ['mocha', 'chai', 'sinon'],
 				client: {
 					mocha: {
 						ui: 'bdd'
@@ -105,6 +105,7 @@ module.exports = function(grunt) {
 					'karma-mocha',
 					'karma-coverage',
 					'karma-chai',
+					'karma-sinon',
 					'karma-firefox-launcher',
 					'karma-chrome-launcher',
 				],
