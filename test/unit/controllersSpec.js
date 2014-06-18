@@ -1,10 +1,11 @@
 /*jshint expr:true*/
 /*global expect*/
 describe('Controllers', function() {
+
 	beforeEach(module('search'));
 	beforeEach(module('searchService'));
+
 	describe('SearchForm controller', function() {
-		
 		var scope, ctrl, $httpBackend;
 		
 		beforeEach(inject(function(_$httpBackend_, $rootScope, $controller){
@@ -42,6 +43,91 @@ describe('Controllers', function() {
 			scope._find();
 			$httpBackend.flush();
 			expect(scope.status).to.be.a.function;
+		});
+	});
+
+	describe('SearchResults controller', function() {
+		var scope, rootScope, ctrl;
+
+		beforeEach(inject(function($rootScope, $controller) {
+			scope = $rootScope.$new();
+			rootScope = $rootScope;
+			ctrl = $controller('SearchResults', { $scope: scope });
+		}));
+
+		it('should be results array', function() {
+			expect(ctrl.results).to.be.array;
+			expect(ctrl.results).to.be.empty;
+		});
+
+		it('should be link in $scope to this controller', function() {
+			expect(scope.ctrl).to.be.eql(ctrl);
+		});
+		
+		it('should be isEmpty method', function() {
+			expect(ctrl.isEmpty).to.be.a.function;
+		});
+
+		it('should isEmpty() returns true when empty', function() {
+			ctrl.results = [];
+			expect(ctrl.isEmpty()).to.be.true;
+		});
+
+		it('should isEmpty() returns false when filled', function() {
+			ctrl.results = [ {is: 'something'} ];
+			expect(ctrl.isEmpty()).to.be.false;
+		});
+
+		it('should respect "searchSucceed" event with data', function() {
+			rootScope.$broadcast('searchSucceed', {data: JSON.stringify('somedata')});
+			expect(ctrl.results).to.be.equal('somedata');
+		});
+
+		it('should not respect "searchSucceed" event without data', function() {
+			rootScope.$broadcast('searchSucceed', {other: JSON.stringify('unexpected')});
+			expect(ctrl.results).to.be.undefined;
+		});
+	});
+
+	describe('SearchTroubles controller', function() {
+		var scope, rootScope, ctrl;
+
+		beforeEach(inject(function($rootScope, $controller) {
+			scope = $rootScope.$new();
+			rootScope = $rootScope;
+			ctrl = $controller('SearchTroubles', { $scope: scope });
+		}));
+
+		it('should be inTrouble property', function() {
+			expect(ctrl.inTrouble).to.be.false;
+		});
+
+		it('should be statusMessage property', function() {
+			expect(ctrl.inTrouble).to.be.empty;
+		});
+
+		it('should be link in $scope to this controller', function() {
+			expect(scope.ctrl).to.be.eql(ctrl);
+		});
+		
+		it('should be isTrouble method', function() {
+			expect(ctrl.isTrouble).to.be.a.function;
+			ctrl.inTrouble = true;
+			expect(ctrl.isTrouble()).to.be.true;
+		});
+
+		it('should respect "searchError" event', function() {
+			ctrl.inTrouble = false;
+			rootScope.$broadcast('searchError');
+			expect(ctrl.inTrouble).to.be.true;
+			expect(ctrl.statusMessage).not.empty;
+		});
+
+		it('should respect "searchSucceed" event', function() {
+			ctrl.inTrouble = true;
+			rootScope.$broadcast('searchSucceed');
+			expect(ctrl.inTrouble).to.be.false;
+			expect(ctrl.statusMessage).to.be.empty;
 		});
 	});
 });
