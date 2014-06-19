@@ -3,6 +3,7 @@ describe('Filters', function(){
 
 	beforeEach(module('searchFilters'));
 
+	/* deprecated */
 	describe('roubles', function() {
 
 		it('should add " руб." after some value', inject(function(roublesFilter) {

@@ -17,6 +17,7 @@ module.exports = function(grunt) {
 			js: {
 				src: [
 					'bower_components/angular/angular.js',
+					'bower_components/angular-i18n/angular-locale_ru-ru.js',
 					'bower_components/angular-resource/angular-resource.js',
 					'bower_components/jquery/dist/jquery.js', // for bootstrap
 					'bower_components/bootstrap/dist/js/bootstrap.js',

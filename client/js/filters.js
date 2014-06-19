@@ -1,6 +1,8 @@
 var searchFilters = angular.module('searchFilters',[]);
 
 /**
+ * @deprecated since angular-i18n
+ *
  * Prepend any value with " руб." suffix;
  * Use with pipe form angular `number` filter;
  *
