@@ -15,7 +15,7 @@
 		shitHappensText: "Приносим свои извинения - поиск временно не работает"
 	};
 	
-	var app = angular.module('search', ['searchService']);
+	var app = angular.module('search', ['searchService','searchFilters']);
 	
 	app.controller('SearchForm', ['$scope', '$rootScope', 'Data', function($scope, $rootScope, Data) {
 		

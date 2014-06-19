@@ -20,8 +20,7 @@ module.exports = function(grunt) {
 					'bower_components/angular-resource/angular-resource.js',
 					'bower_components/jquery/dist/jquery.js', // for bootstrap
 					'bower_components/bootstrap/dist/js/bootstrap.js',
-					'client/js/app.js',
-					'client/js/services.js',
+					'client/js/**/*.js',
 				],
 				dest: 'public/js/scripts.js'
 			}
