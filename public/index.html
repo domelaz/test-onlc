@@ -14,9 +14,9 @@
 						<div class="panel-body">
 							<form name="search-form" ng-controller="SearchForm as form">
 								<div class="input-group" ng-cloak>
-									<input ng-model="searchQuery" ng-model-options="{debounce: 1000}" name="search-query" type="text" placeholder=" {{form.placeholder}} " class="form-control">
+									<input ng-model="searchQuery" ng-model-options="{debounce: 1000}" name="search-query" type="text" placeholder="{{strings.placeholder}}" class="form-control">
 									<span class="input-group-btn">
-										<button class="btn btn-default disabled" type="submit"> {{form.findButtonText}} </button>
+										<button class="btn btn-default disabled" type="submit">{{strings.findButton}}</button>
 									</span>
 								</div>
 							</form>
@@ -35,17 +35,15 @@
 			<div class="row search-results" ng-controller="SearchResults as result">
 				<div class="col-md-8 col-md-offset-2">
 					<div class="panel panel-default" ng-cloak ng-hide="result.isEmpty()">
-						<!-- @todo extend currency filter-->
-						<!-- @todo move locale strings-->
 						<ul class="list-group">
 							<li class="list-group-item" ng-repeat="result in result.results">
 								<div>
 									<h3>{{result.name}}</h3>
-									<div class="search-list--iteminfo">Идентификатор:&nbsp;{{result.id}}</div>
+									<div class="search-list--iteminfo">{{strings.goodId}}&nbsp;{{result.id}}</div>
 									<div>
-										<a href="#">{{result.company}}</a>&nbsp;·&nbsp;Источник: <strong>{{result.infosource}}</strong>
+										<a href="#">{{result.company}}</a>&nbsp;·&nbsp;{{strings.goodSource}}<strong>{{result.infosource}}</strong>
 									</div>
-									<div>Количество:&nbsp;{{result.quant}}
+									<div>{{strings.goodQuantity}}&nbsp;{{result.quant}}
 										<span class="pull-right search-list--itemprice">
 											<strong>{{result.price | currency}}</strong>
 										</span>
