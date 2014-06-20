@@ -16,8 +16,8 @@ describe('Controllers', function() {
 		}));
 
 		it('should contain properties', function() {
-			expect(ctrl.placeholder).to.be.ok;
-			expect(ctrl.findButtonText).to.be.ok;
+			expect(scope.strings).to.be.an.Object;
+			expect(scope.strings).not.be.empty;
 			expect(scope.searchQuery).to.be.empty;
 		});
 
@@ -70,6 +70,11 @@ describe('Controllers', function() {
 		it('should be link in $scope to this controller', function() {
 			expect(scope.ctrl).to.be.eql(ctrl);
 		});
+
+		it('should be link in $scope to strings', function() {
+			expect(scope.strings).to.be.an.Object;
+			expect(scope.strings).not.be.empty;
+		});
 		
 		it('should be isEmpty method', function() {
 			expect(ctrl.isEmpty).to.be.a.function;
@@ -117,6 +122,11 @@ describe('Controllers', function() {
 			expect(scope.ctrl).to.be.eql(ctrl);
 		});
 		
+		it('should be link in $scope to strings', function() {
+			expect(scope.strings).to.be.an.Object;
+			expect(scope.strings).not.be.empty;
+		});
+
 		it('should be isTrouble method', function() {
 			expect(ctrl.isTrouble).to.be.a.function;
 			ctrl.inTrouble = true;
