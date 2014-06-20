@@ -1,19 +1,8 @@
 (function () {
 	
-	var opts = {
-		// минимальная длина поискового запроса
-		minQueryLength: 2,
-		// максимальная длина поискового запроса
-		maxQueryLength: 1024,
-		// адрес обработчика запроса
-		searchHandler: 'search',
-		// задержка перед отправкой запроса на сервер, в миллисекундах
-		sendDelay: 500,
-	};
-	
 	var app = angular.module('search', ['searchService','searchFilters']);
 	
-	app.controller('SearchForm', ['$scope', '$rootScope', 'Data', 'strings', function($scope, $rootScope, Data, strings) {
+	app.controller('SearchForm', ['$scope', '$rootScope', 'Data', 'strings', 'options', function($scope, $rootScope, Data, strings, opts) {
 		
 		this.placeholder = strings.placeholder;
 		this.findButtonText = strings.findButton;
