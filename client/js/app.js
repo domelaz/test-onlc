@@ -9,19 +9,16 @@
 		searchHandler: 'search',
 		// задержка перед отправкой запроса на сервер, в миллисекундах
 		sendDelay: 500,
-		// поясняющий текст в поле поиска
-		placeholderText: "Введите название товара, идентификатор товара или название компании",
-		findButtonText: "Найти",
-		shitHappensText: "Приносим свои извинения - поиск временно не работает"
 	};
 	
 	var app = angular.module('search', ['searchService','searchFilters']);
 	
-	app.controller('SearchForm', ['$scope', '$rootScope', 'Data', function($scope, $rootScope, Data) {
+	app.controller('SearchForm', ['$scope', '$rootScope', 'Data', 'strings', function($scope, $rootScope, Data, strings) {
 		
-		this.placeholder = opts.placeholderText;
-		this.findButtonText = opts.findButtonText;
+		this.placeholder = strings.placeholder;
+		this.findButtonText = strings.findButton;
 		
+		$scope.strings = strings;
 		$scope.searchQuery = '';
 
 		$scope._find = function() {
@@ -56,10 +53,11 @@
 		});
 	}]);
 	
-	app.controller('SearchResults', ['$scope', function($scope) {
+	app.controller('SearchResults', ['$scope', 'strings', function($scope, strings) {
 		
 		this.results = [];
 		$scope.ctrl = this;
+		$scope.strings = strings;
 		
 		this.isEmpty = function() {
 			return (this.results.length > 0) ? false : true;
@@ -81,10 +79,11 @@
 		});*/
 	}]);
 
-	app.controller('SearchTroubles', ['$scope', function($scope) {
+	app.controller('SearchTroubles', ['$scope', 'strings', function($scope, strings) {
 
 		this.inTrouble = false;
 		this.statusMessage = '';
+		$scope.strings = strings;
 		$scope.ctrl = this;
 
 		this.isTrouble = function() {
@@ -94,7 +93,7 @@
 		$scope.$on("searchError", function(event) {
 			var c = event.currentScope.ctrl;
 			c.inTrouble = true;
-			c.statusMessage = opts.shitHappensText;
+			c.statusMessage = event.currentScope.strings.shitHappens;
 		});
 
 		$scope.$on("searchSucceed", function(event) {
